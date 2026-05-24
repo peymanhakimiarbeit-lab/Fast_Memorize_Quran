@@ -409,9 +409,10 @@ export default function HifzModeView({
                     <span ref={currentVerseRef} className="inline">
                       {verse.words.map((word) => {
                         const ws = wordStates[word.id];
-                        const isRevealed = ws?.visibility.kind === 'revealed';
-                        const isCorrect = isRevealed && ws?.visibility.color === 'correct';
-                        const isIncorrect = isRevealed && ws?.visibility.color === 'incorrect';
+                        const vis = ws?.visibility;
+                        const isRevealed = vis?.kind === 'revealed';
+                        const isCorrect = isRevealed && vis?.kind === 'revealed' && vis.color === 'correct';
+                        const isIncorrect = isRevealed && vis?.kind === 'revealed' && vis.color === 'incorrect';
 
                         if (isCorrect) {
                           return (

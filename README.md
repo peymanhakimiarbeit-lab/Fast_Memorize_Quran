@@ -1,157 +1,98 @@
-# Quran Memorization Web App
+# Memorize Faster — Quran Memorization Web App
 
-Eine Next.js 14 Web-App zum Auswendiglernen des Korans — vollständig statisch, läuft auf GitHub Pages ohne eigenes Backend.
-
-## Features
-
-- **Lese-Modus**: Alle Verse sichtbar, Echtzeit-Rezitationsfeedback (grün/rot) per Spracherkennung
-- **Hifz-Modus**: Verse ausgeblendet, progressives Aufdecken Wort für Wort beim korrekten Rezitieren
-- **Spracherkennung**: Web Speech API (primär) + Whisper.cpp/WASM (Fallback)
-- **Koran-Daten**: Quran.com API v4 (kein API-Key erforderlich)
-- **Fortschritt**: Persistenz via localStorage, kein Backend nötig
-- **Offline-fähig**: SWR-Cache für 24-Stunden-Revalidierung
+Eine Web-App zum Auswendiglernen des Korans mit Echtzeit-Spracherkennung und progressivem Wort-Aufdecken.
 
 ---
 
-## Lokale Entwicklung
+## ⚠️ Hinweise / Disclaimer
 
-### Voraussetzungen
+### AI-generiert
+Dieses Projekt wurde mit Hilfe von **Künstlicher Intelligenz (Kiro / Claude AI)** erstellt. Der gesamte Quellcode wurde durch AI generiert und vom Entwickler überprüft.
 
-- Node.js 20+
-- npm 10+
+### Persönliches Projekt
+Dies ist ein **privates, nicht-kommerzielles Lernprojekt**. Es wird nicht verkauft, nicht monetarisiert und dient ausschließlich dem persönlichen Gebrauch zum Auswendiglernen des Korans.
 
-### Setup
+### Kein Anspruch auf Korrektheit
+Die Spracherkennung basiert auf der Web Speech API des Browsers und ist **nicht perfekt**. Die App ersetzt keinen qualifizierten Quran-Lehrer. Für die korrekte Rezitation und Tajweed-Regeln sollte immer ein Lehrer konsultiert werden.
+
+---
+
+## 📖 Quellen und Lizenzen
+
+### Koran-Text
+- **Quelle:** [Quran.com API v4](https://quran.com) — Uthmani-Schrift
+- **Lizenz:** Der Koran-Text selbst ist **gemeinfrei (Public Domain)** — kein Copyright auf den heiligen Text
+- **API-Nutzung:** Die Quran.com API ist öffentlich und kostenlos für nicht-kommerzielle Nutzung
+
+### Übersetzungen
+- **Quelle:** [AlQuran.cloud API](https://alquran.cloud/api) — Open Source Quran API
+- **Lizenz:** MIT-Lizenz (frei nutzbar)
+- **Deutsche Übersetzung:** Bubenheim & Elyas
+- **Englische Übersetzung:** Saheeh International
+- **Persische/Dari Übersetzung:** Ansarian
+
+### Audio-Rezitationen
+- **Quelle:** [verses.quran.com](https://quran.com) — Audio-CDN von Quran.com
+- **Rezitatoren:** Mishary Alafasy, Yasser Al-Dosari, Abdul Basit, Ali Al-Hudhaify, Al-Minshawi
+- **Nutzung:** Frei verfügbar für Koran-Anwendungen
+
+### Schriftart
+- **Amiri Font:** [Google Fonts](https://fonts.google.com/specimen/Amiri) — OFL (Open Font License)
+- Hochwertige arabische Schriftart für Koran-Darstellung
+
+### Spracherkennung
+- **Web Speech API:** Browser-native API (Chrome, Edge) — keine externe Abhängigkeit
+- Keine Audiodaten werden an Dritte gesendet (läuft lokal im Browser)
+
+---
+
+## 🛠️ Technologie-Stack
+
+| Bereich | Technologie | Lizenz |
+|---|---|---|
+| Framework | [Next.js 14](https://nextjs.org) | MIT |
+| Sprache | TypeScript | Apache 2.0 |
+| Styling | [Tailwind CSS](https://tailwindcss.com) | MIT |
+| State Management | [Zustand](https://github.com/pmndrs/zustand) | MIT |
+| Spracherkennung | Web Speech API (Browser-nativ) | — |
+| Hosting | GitHub Pages | Kostenlos |
+
+---
+
+## 🔒 Datenschutz
+
+- **Keine Registrierung** erforderlich
+- **Keine Daten** werden an Server gesendet
+- **Kein Tracking**, keine Analytics, keine Cookies
+- Lernfortschritt wird nur **lokal im Browser** gespeichert (localStorage)
+- Spracherkennung läuft **im Browser** — Audio wird nicht aufgezeichnet oder gespeichert
+
+---
+
+## 📋 Lokale Entwicklung
 
 ```bash
 # Repository klonen
-git clone https://github.com/<dein-username>/memorize_faster.git
-cd memorize_faster/web
+git clone <repo-url>
+cd memorize_faster
 
 # Abhängigkeiten installieren
 npm ci
 
 # Entwicklungsserver starten
 npm run dev
-```
 
-Die App ist dann unter [http://localhost:3000](http://localhost:3000) erreichbar.
-
-### Verfügbare Skripte
-
-```bash
-# Entwicklungsserver
-npm run dev
-
-# Produktions-Build (Static Export nach ./out)
+# Produktions-Build
 npm run build
-
-# Tests einmalig ausführen
-npm run test:run
-
-# Tests im Watch-Modus
-npm run test
-
-# Linting
-npm run lint
 ```
 
 ---
 
-## GitHub Pages Deployment
+## 📄 Lizenz
 
-### 1. GitHub Pages aktivieren
+Dieses Projekt ist ein privates Lernprojekt. Der Quellcode ist nicht zur Weiterverbreitung bestimmt.
 
-1. Gehe zu deinem Repository auf GitHub
-2. Öffne **Settings** → **Pages**
-3. Unter **Source**: wähle **GitHub Actions**
-4. Speichern — GitHub Pages ist jetzt für Deployments via Actions konfiguriert
-
-### 2. Repository-Berechtigungen prüfen
-
-Stelle sicher, dass GitHub Actions Schreibzugriff auf Pages hat:
-
-1. **Settings** → **Actions** → **General**
-2. Unter **Workflow permissions**: wähle **Read and write permissions**
-3. Speichern
-
-### 3. Automatisches Deployment
-
-Nach der Aktivierung wird die App bei jedem Push auf den `main`-Branch automatisch deployed:
-
-```
-Push to main
-    │
-    ▼
-Job: test
-    ├── npm ci
-    └── npm run test:run
-    │
-    ▼ (nur wenn Tests bestehen)
-Job: build-and-deploy
-    ├── npm ci
-    ├── npm run build  →  ./out/
-    ├── Upload Pages artifact
-    └── Deploy to GitHub Pages
-```
-
-Der Deployment-Status ist unter **Actions** im Repository einsehbar.
-
-### 4. Deployment-URL
-
-Nach dem ersten erfolgreichen Deployment ist die App unter folgender URL erreichbar:
-
-```
-https://<dein-username>.github.io/<repository-name>/
-```
-
----
-
-## Projektstruktur
-
-```
-memorize_faster/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # CI/CD Workflow für GitHub Pages
-├── web/                        # Next.js App
-│   ├── src/
-│   │   ├── app/                # Next.js App Router
-│   │   ├── components/         # React-Komponenten
-│   │   │   ├── shared/         # Gemeinsame Komponenten
-│   │   │   ├── reading/        # Lese-Modus Komponenten
-│   │   │   └── hifz/           # Hifz-Modus Komponenten
-│   │   ├── domain/             # Business-Logik (pure TypeScript)
-│   │   ├── repositories/       # Datenzugriff (API + localStorage)
-│   │   ├── stores/             # Zustand Stores
-│   │   ├── asr/                # Spracherkennungs-Provider
-│   │   └── types/              # TypeScript-Interfaces
-│   ├── next.config.js          # Next.js Konfiguration (Static Export)
-│   ├── package.json
-│   └── tsconfig.json
-└── README.md
-```
-
----
-
-## Technologie-Stack
-
-| Bereich | Technologie |
-|---|---|
-| Framework | Next.js 14 (App Router, Static Export) |
-| Sprache | TypeScript (strict mode) |
-| Styling | Tailwind CSS (RTL-Support) |
-| State Management | Zustand |
-| Spracherkennung | Web Speech API + Whisper.cpp/WASM |
-| Koran-Daten | Quran.com API v4 |
-| Testing | Vitest + fast-check (Property-Based Tests) |
-| Deployment | GitHub Pages via GitHub Actions |
-
----
-
-## Anforderungen (Requirements)
-
-- **Req. 10.1**: Static Export (`output: 'export'`) — kein Server-Side Rendering zur Laufzeit
-- **Req. 10.2**: Alle Koran-Daten werden ausschließlich clientseitig von der Quran.com API v4 abgerufen
-- **Req. 10.4**: Vollständig funktionsfähig ohne eigenes Backend
-
-Vollständige Anforderungen: [`.kiro/specs/quran-memorization-web/requirements.md`](.kiro/specs/quran-memorization-web/requirements.md)
+- Koran-Text: Public Domain
+- Übersetzungen: Jeweilige Übersetzer-Lizenzen (siehe oben)
+- Audio: Quran.com (frei für Koran-Apps)
+- Code: Privat, AI-generiert, nicht-kommerziell

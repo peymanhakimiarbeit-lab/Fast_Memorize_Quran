@@ -17,6 +17,23 @@ export const metadata: Metadata = {
   description:
     "A web app for Quran memorization with real-time recitation feedback and progressive word-reveal (Hifz mode).",
   keywords: ["Quran", "memorization", "Hifz", "Arabic", "recitation"],
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Memorize Faster",
+  },
+};
+
+// Next.js 14 requires viewport to be exported separately
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -26,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={amiri.variable}>
-      <body className="antialiased min-h-screen bg-background text-foreground">
+      <body className="antialiased min-h-screen bg-background text-foreground safe-area-inset">
         {/* Top navigation with language selector */}
         <LanguageSelector />
         {children}
