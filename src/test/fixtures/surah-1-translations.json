@@ -1,0 +1,46 @@
+{
+  "translations": [
+    {
+      "verse_key": "1:1",
+      "text": "Im Namen Allahs, des Allerbarmers, des Barmherzigen.",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:2",
+      "text": "Alles Lob gebührt Allah, dem Herrn der Welten,",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:3",
+      "text": "dem Allerbarmer, dem Barmherzigen,",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:4",
+      "text": "dem Herrscher am Tag des Gerichts.",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:5",
+      "text": "Dir allein dienen wir, und Dich allein bitten wir um Hilfe.",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:6",
+      "text": "Führe uns den geraden Weg,",
+      "language_name": "german",
+      "resource_id": 27
+    },
+    {
+      "verse_key": "1:7",
+      "text": "den Weg derer, denen Du Gunst erwiesen hast, nicht derer, die (Deinen) Zorn erregt haben, und nicht der Irregehenden.",
+      "language_name": "german",
+      "resource_id": 27
+    }
+  ]
+}

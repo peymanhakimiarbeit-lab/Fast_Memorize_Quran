@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────── */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-geist-sans: "Geist Sans", system-ui, sans-serif;
+  --font-geist-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* ─── Base Styles ────────────────────────────────────────────────────────── */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Arabic / RTL Typography ────────────────────────────────────────────── */
+
+/**
+ * Arabic text container — applies RTL direction and the Arabic font stack.
+ * Use on any element that renders Quranic text.
+ */
+.arabic-text {
+  font-family: "Amiri", "Scheherazade New", "Traditional Arabic",
+    "Arial Unicode MS", serif;
+  direction: rtl;
+  unicode-bidi: embed;
+  /* Generous line-height for diacritics (Harakat) */
+  line-height: 2.5;
+  /* Prevent ligature issues in some browsers */
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* Font-size variants matching the spec (small: 14pt, medium: 20pt, large: 28pt) */
+.arabic-text--sm {
+  font-size: 14pt;
+}
+
+.arabic-text--md {
+  font-size: 20pt;
+}
+
+.arabic-text--lg {
+  font-size: 28pt;
+}
+
+/* ─── Word Highlighting ──────────────────────────────────────────────────── */
+
+/** Correct recitation — green highlight */
+.word--correct {
+  color: #15803d; /* green-700 */
+  background-color: #dcfce7; /* green-100 */
+  border-radius: 0.25rem;
+  padding: 0 0.125rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .word--correct {
+    color: #86efac; /* green-300 */
+    background-color: #14532d; /* green-900 */
+  }
+}
+
+/** Incorrect recitation — red highlight */
+.word--incorrect {
+  color: #b91c1c; /* red-700 */
+  background-color: #fee2e2; /* red-100 */
+  border-radius: 0.25rem;
+  padding: 0 0.125rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .word--incorrect {
+    color: #fca5a5; /* red-300 */
+    background-color: #7f1d1d; /* red-900 */
+  }
+}
+
+/** Hidden word placeholder (Hifz mode) */
+.word--hidden {
+  color: transparent;
+  background-color: #e5e7eb; /* gray-200 */
+  border-radius: 0.25rem;
+  user-select: none;
+  min-width: 2rem;
+  display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+  .word--hidden {
+    background-color: #374151; /* gray-700 */
+  }
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Minimum touch target size (WCAG 2.5.5) */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
